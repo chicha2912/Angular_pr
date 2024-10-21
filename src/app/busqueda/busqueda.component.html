@@ -1,0 +1,29 @@
+<div class="search-container">
+  <input [(ngModel)]="searchQuery" (keydown)="handleKeyDown($event)" placeholder="Buscar GIFs..." />
+  <button (click)="searchGifs()">Buscar</button>
+</div>
+
+<div class="history">
+  <h3>Historial de Búsquedas</h3>
+  <ul>
+    <li *ngFor="let query of searchHistory" (click)="searchFromHistory(query)">
+      {{ query }}
+    </li>
+  </ul>
+</div>
+
+
+<div *ngIf="noResults" class="no-results">
+  No hay GIFs con "{{ searchQuery }}"
+</div>
+
+
+<div *ngIf="!noResults" class="gif-grid">
+  <div *ngFor="let gif of gifs" class="gif-item">
+    <img [src]="gif.images.fixed_height.url" alt="GIF" />
+    <div class="gif-details">
+      <p>{{ gif.title }}</p> 
+      <p>{{ gif.username ? 'by ' + gif.username : 'by Unknown' }}</p> 
+    </div>
+  </div>
+</div>
